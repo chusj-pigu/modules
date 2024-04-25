@@ -1,4 +1,4 @@
-# wf-modules
+# Subworkflows
 
 Repository for nextflow subworkflows 
 
