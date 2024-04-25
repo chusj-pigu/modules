@@ -23,7 +23,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: nxtlvlsoftware/git-subtree
       - uses: NxtLvLSoftware/git-subtree-action@1.1
         with:
           repo: 'chusj-pigu/wf-mapping/${{ matrix.path }}'
