@@ -26,6 +26,6 @@ jobs:
       - uses: NxtLvLSoftware/git-subtree-action@1.1
         with:
           repo: 'chusj-pigu/subworkflows/${{ matrix.path }}'
-          path: 'chusj-pigu/wf-mapping/${{ matrix.path }}'
+          path: 'chusj-pigu/wf-mapping/subworkflows/${{ matrix.path }}'
           deploy_key: ${{ secrets.DOWNSTREAM_GITHUB_DEPLOY_KEY }}
           force: true # will force push to the downstream repository
