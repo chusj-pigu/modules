@@ -11,7 +11,7 @@ process sam_to_bam {
 
     script:
     """
-    samtools view -@ $task.cpus -Sb $sam > ${sam.baseName}.bam
+    samtools view -@ $task.cpus -e '[qs] >=10' -Sb $sam > ${sam.baseName}.bam
     """
 }
 
