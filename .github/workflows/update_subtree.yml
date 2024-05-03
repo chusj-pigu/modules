@@ -12,6 +12,11 @@ jobs:
       matrix:
         path:
           - dorado
+          - multiqc
+          - samtools
+          - fastp
+          - ubam_fastq
+          - mapping
 
     name: Update downstream ${{ matrix.path }} package
 
