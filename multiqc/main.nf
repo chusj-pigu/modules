@@ -1,5 +1,5 @@
 process multiqc {
-    publishDir "${params.out_dir}", mode : "copy"
+    publishDir "${params.out_dir}/reports", mode : "copy"
     
     input:
     path "*"
