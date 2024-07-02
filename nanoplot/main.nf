@@ -1,14 +1,14 @@
 process nanoplot {
-    publishDir "${params.out_dir}", mode : "copy"
+    publishDir "${params.out_dir}/reports", mode : "copy"
     
     input: 
     path fastq
 
     output: 
-    path "reports"
+    path "nanoplot"
 
     script:
     """
-    NanoPlot -t $task.cpus --fastq $fastq -o reports
+    NanoPlot -t $task.cpus --fastq $fastq -o nanoplot
     """
 }
