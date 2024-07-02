@@ -1,5 +1,5 @@
 process nanoplot {
-    publishDir "${params.out_dir}/reports", mode : "copy"
+    publishDir "${params.out_dir}/workflows", mode : "copy"
     
     input: 
     path reads

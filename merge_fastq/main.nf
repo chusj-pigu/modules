@@ -18,3 +18,19 @@ process merge_fq {
     fi
     """
 }
+
+process merge_samples {
+    label "cat"
+    publishDir "${params.out_dir}/reads", mode : "copy"
+
+    input:
+    tuple val(sample), val(barcode)
+
+    output:
+    path "${sample}.fq.gz"
+
+    script:
+    """
+    cat ${params.in_dir}/${barcode}/* > "${sample}.fq.gz"
+    """
+}
