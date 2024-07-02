@@ -6,7 +6,7 @@ process basecall {
     val model
 
     output:
-    path "${params.sample_id}.bam"
+    path "${params.sample_id}_unaligned.bam"
 
     script:
     def call = params.simplex ? "basecaller" : "duplex"
@@ -14,7 +14,7 @@ process basecall {
     def dev = params.dorado_cpu ? '-x "cpu"' : ""
     def b = params.b ? "-b $params.b" : ""
     """
-    dorado $call $b $dev $model $pod5 $mod > ${params.sample_id}.bam
+    dorado $call $b $dev $model $pod5 $mod > ${params.sample_id}_unaligned.bam
     """
 }
 
