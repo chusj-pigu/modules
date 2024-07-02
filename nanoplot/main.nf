@@ -8,7 +8,7 @@ process nanoplot {
     path "nanoplot"
 
     script:
-    dev in_type = params.skip_basecall ? "--fastq" : "--ubam"
+    def type = params.skip_basecall ? "--fastq" : "--ubam"
     """
     NanoPlot -t $task.cpus --minqual 10 $in_type $reads -o nanoplot 
     """
