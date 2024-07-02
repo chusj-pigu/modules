@@ -5,8 +5,8 @@ process qs_filter {
     path ubam
 
     output:
-    path "${ubam.baseName}.bam", emit: ubam_pass
-    path "${ubam.baseName}_fail.bam", emit: ubam_fail
+    path "${params.sample_id}.bam", emit: ubam_pass
+    path "${params.sample_id}_fail.bam", emit: ubam_fail
 
     script:
     """
