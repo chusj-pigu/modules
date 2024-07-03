@@ -5,11 +5,11 @@ process nanoplot {
     path reads
 
     output: 
-    stdout
+    path "${reads.simpleName}"
 
     script:
     def type = params.skip_basecall ? "--fastq" : "--ubam"
     """
-    NanoPlot -t $task.cpus --minqual 10 -p ${reads.simpleName} $type $reads 
+    NanoPlot -t $task.cpus --minqual 10 $type $reads -o ${reads.simpleName}
     """
 }
