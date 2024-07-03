@@ -1,5 +1,5 @@
 process mosdepth {
-    publishDir "${params.out_dir}/reports", mode : "copy"
+    publishDir "${params.out_dir}/reports/mosdepth", mode : "copy"
 
     input:
     tuple path(bam), path(bai)
