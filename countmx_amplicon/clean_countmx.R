@@ -1,5 +1,4 @@
 library(tidyverse)
-library("magrittr")
 library(writexl)
 
 options(width = 400)
