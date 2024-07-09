@@ -9,7 +9,8 @@ process nanoplot {
 
     script:
     def type = params.skip_basecall ? "--fastq" : "--ubam"
+    def qual = (params.model == 'sup') ? "10" : (params.model == 'hac') ? "9"
     """
-    NanoPlot -t $task.cpus --minqual 10 $type $reads -o ${reads.simpleName}
+    NanoPlot -t $task.cpus -p ${reads.simpleName} --minqual $qual $type $reads -o ${reads.simpleName}
     """
 }
