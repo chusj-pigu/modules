@@ -1,4 +1,4 @@
-process channel {
+process pod5_channel {
     label "pod5"
     container="chrisamiller/pod5-tools:0.2.4"
     tag "pod5 channel $params.sample_id"

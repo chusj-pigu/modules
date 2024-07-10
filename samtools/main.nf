@@ -19,7 +19,7 @@ process sam_sort {
 
 process ubam_to_fastq {
     publishDir "${params.out_dir}/reads", mode : "copy"
-    label "sam_sm"
+    label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "bam-fastq $ubam.baseName"
 
