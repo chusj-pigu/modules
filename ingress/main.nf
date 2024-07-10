@@ -1,6 +1,6 @@
 process gather_sturgeon {
     memory '5G'
-    tag "gather $sample_id"
+    tag "gather $params.sample_id"
 
     input:
     path adj

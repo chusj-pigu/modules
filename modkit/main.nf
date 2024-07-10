@@ -2,7 +2,7 @@ process adjust_mods {
     container="ontresearch/modkit"
     publishDir "${params.out_dir}/modkit", mode : "copy"
     label "modkit"
-    tag "adjust_mod ($sample_id)"
+    tag "adjust_mod $params.sample_id"
 
     input:
     path bam
@@ -20,7 +20,7 @@ process extract {
     container="ontresearch/modkit"
     publishDir "${params.out_dir}/modkit", mode : "copy"
     label "modkit"
-    tag "extract ($sample_id)"
+    tag "extract $params.sample_id"
 
     input: 
     path adj_bam

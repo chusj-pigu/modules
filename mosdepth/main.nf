@@ -1,7 +1,7 @@
 process mosdepth {
     container="quay.io/biocontainers/mosdepth:0.3.3--h37c5b7d_2"
     publishDir "${params.out_dir}/reports/mosdepth", mode : "copy"
-    tag "mosdepth ($bam.baseName)"
+    tag "mosdepth $bam.baseName"
 
     input:
     tuple path(bam), path(bai)

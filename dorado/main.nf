@@ -1,7 +1,7 @@
 process basecall {
     container="ghcr.io/bwbioinfo/dorado-docker-cwl:latest"
     label "dorado"
-    tag "basecalling $sample_id"
+    tag "basecalling $params.sample_id"
 
     input:
     path pod5

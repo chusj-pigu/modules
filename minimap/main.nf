@@ -1,6 +1,6 @@
 process mapping {
     label "minimap"
-    tag "mapping $sample_id"
+    tag "mapping $params.sample_id"
     container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
 
 

@@ -1,7 +1,7 @@
 process predict {
     publishDir "${params.out_dir}/sturgeon", mode : "copy"
     container="ghcr.io/charlenelawdes/sturgeon-docker:latest"
-    tag "sturgeon predict ($sample_id)"
+    tag "sturgeon predict $params.sample_id"
 
     input: 
     path calls
@@ -19,7 +19,7 @@ process predict {
 process inputtobed {
     publishDir "${params.out_dir}/sturgeon", mode : "copy"
     container="ghcr.io/charlenelawdes/sturgeon-docker:latest"
-    tag "sturgeon bed ($sample_id)"
+    tag "sturgeon bed $params.sample_id"
 
     input: 
     path modkit
