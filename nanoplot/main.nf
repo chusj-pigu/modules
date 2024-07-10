@@ -10,6 +10,6 @@ process nanoplot {
     script:
     def type = params.skip_basecall ? "--fastq" : "--ubam"
     """
-    NanoPlot -t $task.cpus -p ${reads.simpleName} $type $reads -o ${reads.simpleName}
+    NanoPlot -t $task.cpus -p ${reads.simpleName} --huge $type $reads -o ${reads.simpleName}
     """
 }
