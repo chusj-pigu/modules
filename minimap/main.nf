@@ -3,17 +3,16 @@ process mapping {
     tag "mapping $params.sample_id"
     container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
 
-
     input:
     path ref
     path fastq
 
     output:
-    path "${params.sample_id}_aligned.sam"
+    path "${params.sample_id}.${ref.simpleName}.sam"
 
     script:
     """
-    minimap2 -y -ax map-ont -t $params.threads $ref $fastq > "${params.sample_id}_aligned.sam"
+    minimap2 -y -ax map-ont -t $params.threads $ref $fastq > "${params.sample_id}.${ref.simpleName}.sam"
     """
 }
 
