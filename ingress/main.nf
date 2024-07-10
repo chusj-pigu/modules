@@ -1,6 +1,26 @@
-process merge_fq {
+process gather_sturgeon {
+    memory '5G'
+    tag "gather $sample_id"
+
+    input:
+    path adj
+    path scores
+
+    output:
+    path "modkit"
+
+    script :
+    """
+    mkdir -p modkit
+    cp $adj modkit
+    cp $scores modkit
+    """
+}
+
+process merge_amplicon {
     label "cat"
     publishDir "${params.out_dir}/reads", mode : "copy"
+    tag "merge $sample"
 
     input:
     tuple val(sample), val(fasta), val(barcode)
@@ -19,9 +39,10 @@ process merge_fq {
     """
 }
 
-process merge_samples {
+process merge_cDNA {
     label "cat"
     publishDir "${params.out_dir}/reads", mode : "copy"
+    tag "merge $sample"
 
     input:
     tuple val(sample), val(barcode)

@@ -1,5 +1,7 @@
-process pod5_channel {
+process channel {
     label "pod5"
+    container="chrisamiller/pod5-tools:0.2.4"
+    tag "pod5 channel ($sample_id)"
     
     input:
     path pod5
@@ -14,8 +16,10 @@ process pod5_channel {
     """
 }
 
-process pod5_subset {
+process subset {
     label "pod5"
+    container="chrisamiller/pod5-tools:0.2.4"
+    tag "pod5 subset ($sample_id)"
 
     input:
     path pod5
