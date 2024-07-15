@@ -1,5 +1,5 @@
 process clean_countmx {
-    publishDir "${params.out_dir}/reports", mode : "copy"
+    publishDir "${params.out_dir}/reports"
 
     input:
     path tab

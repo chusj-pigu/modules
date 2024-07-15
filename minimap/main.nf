@@ -17,7 +17,6 @@ process mapping {
 }
 
 process mapping_amplicon {
-    publishDir "${params.out_dir}/alignments", mode : "copy"
     label "minimap"
     tag "mapping $sample"
     container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"

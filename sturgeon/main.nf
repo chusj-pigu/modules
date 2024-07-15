@@ -1,5 +1,5 @@
 process predict {
-    publishDir "${params.out_dir}/sturgeon", mode : "copy"
+    publishDir "${params.out_dir}/sturgeon"
     container="ghcr.io/charlenelawdes/sturgeon-docker:latest"
     tag "sturgeon predict $params.sample_id"
 

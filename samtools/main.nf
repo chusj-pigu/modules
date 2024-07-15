@@ -1,5 +1,5 @@
 process sam_sort {
-    publishDir "${params.out_dir}/alignments", mode : "copy"
+    publishDir "${params.out_dir}/alignments"
     label "sam_big"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "sam_sort $sam.baseName"
@@ -18,7 +18,7 @@ process sam_sort {
 }
 
 process ubam_to_fastq {
-    publishDir "${params.out_dir}/reads", mode : "copy"
+    publishDir "${params.out_dir}/reads"
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "bam-fastq $ubam.baseName"
@@ -27,12 +27,12 @@ process ubam_to_fastq {
     path ubam
 
     output:
-    path "${ubam.baseName}.fq.gz"
+    path "${params.sample_id}_pass.fq.gz"
 
     script:
     def mod = params.no_mod ? "" : "-T '*'" 
     """
-    samtools fastq $mod -@ $params.threads $ubam | gzip > "${ubam.baseName}.fq.gz" 
+    samtools fastq $mod -@ $params.threads $ubam | gzip > "${params.sample_id}_pass.fq.gz" 
     """
 }
 
@@ -45,11 +45,11 @@ process qs_filter {
     path ubam
 
     output:
-    path "${params.sample_id}.bam", emit: ubam_pass
+    path "${params.sample_id}_pass.bam", emit: ubam_pass
     path "${params.sample_id}_fail.bam", emit: ubam_fail
 
     script:
     """
-    samtools view --no-PG -@ $params.threads -e '[qs] >=10' -b $ubam --output ${params.sample_id}.bam --unoutput ${params.sample_id}_fail.bam
+    samtools view --no-PG -@ $params.threads -e '[qs] >=10' -b $ubam --output ${params.sample_id}_pass.bam --unoutput ${params.sample_id}_fail.bam
     """
 }

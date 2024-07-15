@@ -1,5 +1,5 @@
 process multiqc {
-    publishDir "${params.out_dir}/reports", mode : "copy"
+    publishDir "${params.out_dir}/reports"
     container="staphb/multiqc:latest"
     
     input:

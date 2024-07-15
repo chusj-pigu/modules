@@ -19,7 +19,7 @@ process gather_sturgeon {
 
 process merge_amplicon {
     label "cat"
-    publishDir "${params.out_dir}/reads", mode : "copy"
+    publishDir "${params.out_dir}/reads"
     tag "merge $sample"
 
     input:

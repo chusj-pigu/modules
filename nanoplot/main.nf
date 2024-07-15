@@ -1,5 +1,5 @@
 process nanoplot {
-    publishDir "${params.out_dir}/workflows", mode : "copy"
+    publishDir "${params.out_dir}/workflows"
     container="nanozoo/nanoplot:1.42.0--547049c"
     tag "nanoplot $reads.simpleName"
     
