@@ -1,5 +1,5 @@
 process sam_sort {
-    publishDir "${params.out_dir}/alignments"
+    publishDir "${params.out_dir}/alignments", mode: 'copy'
     label "sam_big"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "sam_sort $sam.baseName"
@@ -18,7 +18,7 @@ process sam_sort {
 }
 
 process ubam_to_fastq {
-    publishDir "${params.out_dir}/reads"
+    publishDir "${params.out_dir}/reads", mode: 'copy'
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "bam-fastq $ubam.baseName"

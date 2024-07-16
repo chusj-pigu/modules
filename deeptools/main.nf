@@ -2,7 +2,7 @@ process multiBamSummary {
     container="ghcr.io/bwbioinfo/deeptools-docker-cwl:latest"
     label "deeptools"
     tag "multibam $fasta"
-    publishDir "${params.out_dir}/reports"
+    publishDir "${params.out_dir}/reports", mode: 'copy'
 
     input:
     tuple val(fasta), path(bam), path(bai)
