@@ -4,7 +4,7 @@ process basecall {
     tag "basecalling $params.sample_id"
 
     input:
-    path pod5
+    val pod5
     val model
 
     output:
