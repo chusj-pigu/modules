@@ -55,3 +55,19 @@ process merge_cDNA {
     cat ${params.in_dir}/${barcode}/* > "${sample}.fq.gz"
     """
 }
+
+process merge_glob {
+    label "cat"
+    publishDir "${params.out_dir}/reads", mode : "copy"
+
+    input:
+    path fq_pass_files
+
+    output:
+    path '${params.sample_id}_merged.fq.gz'
+
+    script:
+    """
+    cat ${fq_pass_files.join(' ')} > ${params.sample_id}_merged.fq.gz
+    """
+}
