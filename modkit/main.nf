@@ -26,10 +26,10 @@ process extract {
     path adj_bam
 
     output:
-    path "${adj_bam.baseName[0]}.mod_scores.txt"
+    path "${params.sample_id}.mod_scores.txt"
 
     script:
     """
-    modkit extract -t $params.threads $adj_bam ${adj_bam.baseName[0]}.mod_scores.txt
+    modkit extract -t $params.threads $adj_bam ${params.sample_id}.mod_scores.txt
     """
 }
