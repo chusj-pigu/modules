@@ -50,6 +50,6 @@ process qs_filter {
 
     script:
     """
-    samtools view --no-PG -@ $params.threads -e '[qs] >=10' -b $ubam --output ${params.sample_id}_pass.bam --unoutput ${params.sample_id}_fail.bam
+    samtools view --no-PG -@ $params.threads -e '[qs] >=$params.minqs' -b $ubam --output ${params.sample_id}_pass.bam --unoutput ${params.sample_id}_fail.bam
     """
 }
