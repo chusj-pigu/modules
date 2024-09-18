@@ -7,11 +7,11 @@ process nanoplot {
     path reads
 
     output: 
-    path "${reads.simpleName}"
+    path "Nanoplot/${reads.simpleName}"
 
     script:
     def type = params.skip_basecall ? "--fastq" : "--ubam"
     """
-    NanoPlot -t $task.cpus -p ${reads.simpleName} --minqual 10 --huge $type $reads -o ${reads.simpleName}
+    NanoPlot -t $task.cpus -p ${reads.simpleName} --minqual 10 --huge $type $reads -o Nanoplot/${reads.simpleName}
     """
 }

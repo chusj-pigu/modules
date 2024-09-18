@@ -39,7 +39,7 @@ process merge_amplicon {
     """
 }
 
-process merge_cDNA {
+process merge_barcode {
     label "cat"
     publishDir "${params.out_dir}/reads", mode : "copy"
     tag "merge $sample"
