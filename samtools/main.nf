@@ -32,7 +32,7 @@ process ubam_to_fastq {
     script:
     def mod = params.no_mod ? "" : "-T '*'" 
     """
-    samtools fastq $mod -@ $params.threads $ubam | gzip > "${ubam.baseName}.fq.gz" 
+    samtools fastq $mod -@ $params.threads $ubam > ${ubam.baseName}.fq.gz
     """
 }
 
