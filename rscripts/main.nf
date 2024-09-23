@@ -9,6 +9,6 @@ process clean_countmx {
 
     script:
     """
-    Rscript ${projectDir}/subworkflows/rscripts/clean_countmx.R
+    Rscript ${projectDir}/modules/rscripts/clean_countmx.R
     """
 }
