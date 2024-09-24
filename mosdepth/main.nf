@@ -13,8 +13,8 @@ process mosdepth {
     path "${bam.baseName}.regions.bed.gz", optional: true
 
     script:
-    def bed = params.bed ? "-b $params.bed" : ""
+    def bed = params.bed ? "-b ${params.bed}" : ""
     """
-    mosdepth -n '${bam.baseName}' $bam
+    mosdepth -n ${bed} '${bam.baseName}' $bam
     """
 }
