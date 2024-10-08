@@ -55,3 +55,74 @@ process merge_barcode {
     cat ${params.in_dir}/${barcode}/* > "${sample}.fq.gz"
     """
 }
+
+process grep_vcf {
+    label "grep" 
+    tag "$type"
+
+    input:
+    tuple val(type), path(vcf)
+    tuple val(type), val(pattern)
+
+    output:
+    tuple val(type), path("${params.sample_id}_${type}.ids")
+
+    script:
+    """
+    grep -oE "${pattern}" $vcf > ${params.sample_id}_${type}.ids || touch ${params.sample_id}_${type}.ids
+    """
+}
+
+process grep_fusion {
+    label "grep" 
+    tag "$type"
+
+    input:
+    tuple val(type), path(vcf)
+
+    output:
+    tuple val(type), path("${params.sample_id}_${type}.vcf"), optional:true
+
+    when:
+    type == 'fusion'
+
+    script:
+    """
+    grep 'gene_fusion' $vcf > ${params.sample_id}_${type}.vcf || touch ${params.sample_id}_${type}.vcf
+    """
+}
+
+process grep_vcfGenes {
+    label "grep" 
+    tag "$type"
+
+    input:
+    tuple val(type), path(vcf)
+
+    output:
+    tuple val(type), path("${params.sample_id}_${type}.genes.vcf"), optional: true
+
+    script:
+    def genes_filter = params.gene_list.endsWith('NO_FILE') ? "-v -f $params.gene_list" : "-f $params.gene_list"
+    """
+    grep $genes_filter $vcf > ${params.sample_id}_${type}.genes.vcf || touch ${params.sample_id}_${type}.genes.vcf
+    """
+}
+
+process gzipd_vcf {
+    label "gzip"
+    tag "$type"
+
+    input:
+    tuple val(type), path(vcf)
+
+    output:
+    tuple val(type), path("${vcf.baseName}")
+
+    script:
+    """
+    gzip -d -c $vcf > ${vcf.baseName}
+    """
+}
+
+
