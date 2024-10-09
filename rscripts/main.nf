@@ -21,15 +21,14 @@ process clean_cnvTable {
 
     input:
     tuple val(type), path(table)
+    path gene_file
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
 
-    when:
-    type == 'cnv'
 
     script:
-    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$params.gene_list"
+    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$gene_file"
     """
     vcf_cnv.R $table ${params.sample_id}_${type}_summary.tsv $genes
     """
@@ -42,15 +41,14 @@ process clean_fusionTable {
 
     input:
     tuple val(type), path(table)
+    path gene_file
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
 
-    when:
-    type == 'fusion'
 
     script:
-    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$params.gene_list"
+    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$gene_file"
     """
     vcf_fusion.R $table ${params.sample_id}_${type}_summary.tsv $genes
     """
@@ -63,15 +61,13 @@ process clean_translocTable {
 
     input:
     tuple val(type), path(table)
+    path gene_file
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
 
-    when:
-    type == 'translocation'
-
     script:
-    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$params.gene_list"
+    def genes = params.gene_list.endsWith('NO_FILE') ? "" : "$gene_file"
     """
     vcf_transloc.R $table ${params.sample_id}_${type}_summary.tsv $genes
     """
