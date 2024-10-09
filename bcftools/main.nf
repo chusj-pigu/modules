@@ -1,11 +1,10 @@
 process bcf_filterIDs {
     container="staphb/bcftools"
     label "bcf"
-    tag "filter vcf"
+    tag "$type"
 
     input:
-    tuple val(tpye), path(vcf)
-    tuple val(type), path(ids)
+    tuple val(type), path(vcf), path(ids)
 
     output:
     tuple val(type), path("${params.sample_id}_${type}.filtered.vcf")
@@ -13,23 +12,5 @@ process bcf_filterIDs {
     script:
     """
     bcftools view --include ID==@$ids $vcf > ${params.sample_id}_${type}.filtered.vcf
-    """
-}
-
-process bcf_selectFields {
-    container="staphb/bcftools"
-    label "bcf"
-    tag "select fields vcf"
-
-    input:
-    tuple val(tpye), path(vcf)
-    tuple val(type), val(fields)
-
-    output:
-    tuple val(type), path("${params.sample_id}_${type}.selected.vcf")
-
-    script:
-    """
-    bcftools view -f '%CHROM %POS %ID $fields \n' $vcf > ${params.sample_id}_${type}.selected.vcf
     """
 }

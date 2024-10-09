@@ -3,8 +3,7 @@ process gatk_table {
     tag "$type"
 
     input:
-    tuple val(type), path(vcf)
-    tuple val(type), val(field)
+    tuple val(type), path(vcf), val(field)
 
     output:
     tuple val(type), path("${params.sample_id}_${type}.table")
