@@ -56,13 +56,12 @@ process merge_barcode {
     """
 }
 
-process grep_vcf {
+process grep_vcfIDs {
     label "grep" 
     tag "$type"
 
     input:
-    tuple val(type), path(vcf)
-    tuple val(type), val(pattern)
+    tuple val(type), path(vcf), val(pattern)
 
     output:
     tuple val(type), path("${params.sample_id}_${type}.ids")
