@@ -53,3 +53,41 @@ process qs_filter {
     samtools view --no-PG -@ $params.threads -e '[qs] >=$params.minqs' -b $ubam --output ${params.sample_id}_pass.bam --unoutput ${params.sample_id}_fail.bam
     """
 }
+
+process mergeChunks {
+    container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
+    tag "merge $chunk"
+    label "sam_mid"
+    debug true
+    executor 'slurm'
+    array 22
+    
+    input:
+    tuple val(chunk), path(bam)
+    
+    output:
+    path "${chunk}.bam"
+
+    script:
+    """
+    samtools merge -@ ${params.threads} "${chunk}.bam" $bam
+    """
+}
+
+process mergeFinal {
+    container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
+    publishDir "${params.out_dir}/alignments", mode: 'copy'
+    label "sam_big"
+    debug true
+
+    input:
+    path merged_bams
+
+    output:
+    tuple path("${params.sample_id}.bam"), path("${params.sample_id}.bam.bai")
+
+    script:
+    """
+    samtools merge -@ ${params.threads} --write-index ${params.sample_id}.bam##idx##${params.sample_id}.bam.bai $merged_bams
+    """
+}
