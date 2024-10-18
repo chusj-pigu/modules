@@ -1,6 +1,6 @@
 process adjust_mods {
+    executor = 'slurm'
     container="ontresearch/modkit"
-    publishDir "${params.out_dir}/modkit", mode: 'copy'
     label "modkit"
     tag "adjust_mod $params.sample_id"
 
@@ -17,8 +17,8 @@ process adjust_mods {
 }
 
 process extract {
+    executor = 'slurm'
     container="ontresearch/modkit"
-    publishDir "${params.out_dir}/modkit", mode: 'copy'
     label "modkit"
     tag "extract $params.sample_id"
 

@@ -1,7 +1,8 @@
 process pod5_channel {
+    executor = 'slurm'
     label "pod5"
     container="chrisamiller/pod5-tools:0.2.4"
-    tag "pod5 channel $params.sample_id"
+    tag "$params.sample_id"
     
     input:
     path pod5
@@ -17,9 +18,10 @@ process pod5_channel {
 }
 
 process subset {
+    executor = 'slurm'
     label "pod5"
     container="chrisamiller/pod5-tools:0.2.4"
-    tag "pod5 subset $params.sample_id"
+    tag "$params.sample_id"
 
     input:
     path pod5

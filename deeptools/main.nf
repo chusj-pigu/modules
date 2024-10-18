@@ -1,4 +1,5 @@
 process multiBamSummary {
+    executor = 'slurm'
     container="ghcr.io/bwbioinfo/deeptools-docker-cwl:latest"
     label "deeptools"
     tag "multibam $fasta"

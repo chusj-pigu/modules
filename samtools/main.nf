@@ -1,4 +1,5 @@
 process sam_sort {
+    executor = 'slurm'
     label "sam_big"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "sam_sort $sam.baseName"
@@ -17,6 +18,7 @@ process sam_sort {
 }
 
 process ubam_to_fastq {
+    executor = 'slurm'
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "bam-fastq $ubam.baseName"
@@ -35,6 +37,7 @@ process ubam_to_fastq {
 }
 
 process qs_filter {
+    executor = 'slurm'
     label "sam_sm"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "qc $ubam.baseName"
@@ -53,6 +56,7 @@ process qs_filter {
 }
 
 process mergeChunks {
+    executor = 'slurm'
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "merge $chunk"
     label "sam_mid"
@@ -73,6 +77,7 @@ process mergeChunks {
 }
 
 process mergeFinal {
+    executor = 'slurm'
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     publishDir "${params.out_dir}/alignments", mode: 'copy'
     label "sam_big"
