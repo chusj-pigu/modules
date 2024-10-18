@@ -1,5 +1,5 @@
 process multiqc {
-    executor = 'slurm'
+    
     publishDir "${params.out_dir}/reports", mode: 'copy'
     container="staphb/multiqc:latest"
     

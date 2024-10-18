@@ -1,5 +1,5 @@
 process pod5_channel {
-    executor = 'slurm'
+    
     label "pod5"
     container="chrisamiller/pod5-tools:0.2.4"
     tag "$params.sample_id"
@@ -18,7 +18,7 @@ process pod5_channel {
 }
 
 process subset {
-    executor = 'slurm'
+    
     label "pod5"
     container="chrisamiller/pod5-tools:0.2.4"
     tag "$params.sample_id"
