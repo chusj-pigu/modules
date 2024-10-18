@@ -41,7 +41,6 @@ process merge_amplicon {
 
 process merge_barcode {
     label "cat"
-    publishDir "${params.out_dir}/reads", mode : "copy"
     tag "merge $sample"
 
     input:
@@ -52,7 +51,7 @@ process merge_barcode {
 
     script:
     """
-    cat ${params.in_dir}/${barcode}/* > "${sample}.fq.gz"
+    find ${params.in_dir}/${barcode} -type f | xargs cat > ${sample}.fq.gz
     """
 }
 
@@ -124,4 +123,17 @@ process gzipd_vcf {
     """
 }
 
+process publish_artifact {
+    publishDir "${params.out_dir}/${params.out_sub}", mode: 'copy', pattern: "*"
+   
+    input:
+    path fname
+   
+    output:
+    path fname
 
+    script:
+    """
+    echo "Writing output files"
+    """
+}
