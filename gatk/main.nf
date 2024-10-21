@@ -10,6 +10,6 @@ process gatk_table {
 
     script:
     """
-    gatk VariantsToTable -V $vcf -F CHROM -F POS -F ID $field -O ${params.sample_id}_${type}.table --show-filtered
+    gatk VariantsToTable -V $vcf -F CHROM -F POS $field -O ${params.sample_id}_${type}.table --show-filtered
     """
 }

@@ -56,55 +56,20 @@ process merge_barcode {
     """
 }
 
-process grep_vcfIDs {
-    label "grep" 
-    tag "$type"
-
-    input:
-    tuple val(type), path(vcf), val(pattern)
-
-    output:
-    tuple val(type), path("${params.sample_id}_${type}.ids")
-
-    script:
-    """
-    grep -oE "${pattern}" $vcf > ${params.sample_id}_${type}.ids || touch ${params.sample_id}_${type}.ids
-    """
-}
-
-process grep_fusion {
-    label "grep" 
-    tag "$type"
-
-    input:
-    tuple val(type), path(vcf)
-
-    output:
-    tuple val(type), path("${params.sample_id}_${type}.vcf"), optional:true
-
-    when:
-    type == 'fusion'
-
-    script:
-    """
-    grep 'gene_fusion' $vcf > ${params.sample_id}_${type}.vcf || touch ${params.sample_id}_${type}.vcf
-    """
-}
-
 process grep_vcfGenes {
     label "grep" 
     tag "$type"
 
     input:
     tuple val(type), path(vcf)
+    path genes
 
     output:
     tuple val(type), path("${params.sample_id}_${type}.genes.vcf"), optional: true
 
     script:
-    def genes_filter = params.gene_list.endsWith('NO_FILE') ? "-v -f $params.gene_list" : "-f $params.gene_list"
     """
-    grep $genes_filter $vcf > ${params.sample_id}_${type}.genes.vcf || touch ${params.sample_id}_${type}.genes.vcf
+    grep -f $genes $vcf $impact > ${params.sample_id}_${type}.genes.vcf || touch ${params.sample_id}_${type}.genes.vcf
     """
 }
 
@@ -121,6 +86,21 @@ process gzipd_vcf {
     script:
     """
     gzip -d -c $vcf > ${vcf.baseName}
+    """
+}
+
+process publish_artifact {
+    publishDir "${params.out_dir}/${params.out_sub}", mode: 'copy', pattern: "*"
+   
+    input:
+    path fname
+   
+    output:
+    path fname
+
+    script:
+    """
+    echo "Writing output files"
     """
 }
 
