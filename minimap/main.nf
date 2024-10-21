@@ -1,4 +1,5 @@
 process mapping {
+    
     label "minimap"
     tag "mapping $params.sample_id"
     container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
@@ -17,6 +18,7 @@ process mapping {
 }
 
 process mapping_amplicon {
+    
     label "minimap"
     tag "mapping $sample"
     container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"

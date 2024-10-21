@@ -41,7 +41,6 @@ process merge_amplicon {
 
 process merge_barcode {
     label "cat"
-    publishDir "${params.out_dir}/reads", mode : "copy"
     tag "merge $sample"
 
     input:
@@ -52,7 +51,7 @@ process merge_barcode {
 
     script:
     """
-    cat ${params.in_dir}/${barcode}/* > "${sample}.fq.gz"
+    find ${params.in_dir}/${barcode} -type f | xargs cat > ${sample}.fq.gz
     """
 }
 
