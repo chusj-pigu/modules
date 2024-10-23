@@ -61,14 +61,14 @@ process grep_vcfGenes {
 
     input:
     tuple val(type), path(vcf)
-    path genes
 
     output:
-    tuple val(type), path("${params.sample_id}_${type}.genes.vcf"), optional: true
+    tuple val(type), path("${params.sample_id}_${type}.genes.table"), optional: true
 
     script:
+    def genes_filter = params.gene_list.endsWith('NO_FILE') ? "-v -f $params.gene_list" : "-f $params.gene_list"
     """
-    grep -f $genes $vcf $impact > ${params.sample_id}_${type}.genes.vcf || touch ${params.sample_id}_${type}.genes.vcf
+    grep $genes_filter $vcf > ${params.sample_id}_${type}.genes.table || touch ${params.sample_id}_${type}.genes.table
     """
 }
 

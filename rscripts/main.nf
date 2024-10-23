@@ -39,14 +39,13 @@ process clean_svTable {
 
     input:
     tuple val(type), path(table)
-    path gene_file
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
 
     script:
     """
-    vcf_sv.R $table ${params.sample_id}_${type}_summary.tsv $gene_file
+    vcf_sv.R $table ${params.sample_id}_${type}_summary.tsv
     """
 }
 

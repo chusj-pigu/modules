@@ -1,18 +1,18 @@
 process bcf_selectFields {
     container="staphb/bcftools"
     label "bcf"
-    tag "select fields vcf"
+    tag "$type"
+    executor 'slurm'
+    array 3
 
     input:
-    tuple val(tpye), path(vcf)
-    tuple val(type), val(info)
-    tuple val(type), val(format)
+    tuple val(type), path(vcf), val(fields)
 
     output:
     tuple val(type), path("${params.sample_id}_${type}.selected.vcf")
 
     script:
     """
-    bcftools view -f '%CHROM %POS %ID $fields \n' $vcf > ${params.sample_id}_${type}.selected.vcf
+    bcftools view -f '%CHROM %POS %ID %REF %ALT $fields \n' $vcf > ${params.sample_id}_${type}.selected.vcf
     """
 }
