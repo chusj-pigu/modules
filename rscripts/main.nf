@@ -18,13 +18,17 @@ process clean_cnvTable {
     publishDir "${params.out_dir}/variants", mode: 'copy'
     container 'rocker/tidyverse:latest'
     tag "$type"
+    label "rscript"
+    executor 'slurm'
 
     input:
     tuple val(type), path(table)
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
-
+    
+    when:
+    table.size() > 0
 
     script:
     """
@@ -36,12 +40,17 @@ process clean_svTable {
     publishDir "${params.out_dir}/variants", mode: 'copy'
     container 'rocker/tidyverse:latest'
     tag "$type"
+    label "rscript"
+    executor 'slurm'
 
     input:
     tuple val(type), path(table)
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
+
+    when:
+    table.size() > 0
 
     script:
     """
@@ -53,12 +62,17 @@ process clean_snpTable {
     publishDir "${params.out_dir}/variants", mode: 'copy'
     container 'rocker/tidyverse:latest'
     tag "$type"
+    label "rscript"
+    executor 'slurm'
 
     input:
     tuple val(type), path(table)
 
     output:
     path "${params.sample_id}_${type}_summary.tsv"
+
+    when:
+    table.size() > 0
 
     script:
     """
