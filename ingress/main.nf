@@ -88,19 +88,4 @@ process gzipd_vcf {
     """
 }
 
-process publish_artifact {
-    publishDir "${params.out_dir}/${params.out_sub}", mode: 'copy', pattern: "*"
-   
-    input:
-    path fname
-   
-    output:
-    path fname
-
-    script:
-    """
-    echo "Writing output files"
-    """
-}
-
 

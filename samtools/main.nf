@@ -1,5 +1,6 @@
 process sam_sort {
-    
+
+    publishDir "${params.out_dir}/alignments", mode: 'link'
     label "sam_big"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "sam_sort $sam.baseName"
@@ -18,7 +19,8 @@ process sam_sort {
 }
 
 process ubam_to_fastq {
-    
+
+    publishDir "${params.out_dir}/reads", mode: 'link'
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "bam-fastq $ubam.baseName"
@@ -79,7 +81,7 @@ process mergeChunks {
 process mergeFinal {
     
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
-    publishDir "${params.out_dir}/alignments", mode: 'copy'
+    publishDir "${params.out_dir}/alignments", mode: 'link'
     label "sam_big"
     debug true
 
