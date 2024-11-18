@@ -15,7 +15,7 @@ process clean_countmx {
 }
 
 process clean_vcf {
-    publishDir "${params.out_dir}/variants", mode: 'copy'
+    publishDir "${params.out_dir}", mode: 'copy'
     container 'rocker/tidyverse:latest'
     tag "$type"
     label "rscript"
