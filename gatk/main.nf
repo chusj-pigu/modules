@@ -2,16 +2,16 @@ process gatk_table {
     container="broadinstitute/gatk"
     tag "$type"
     executor 'slurm'
-    array 3
+    array 4 
 
     input:
     tuple val(type), path(vcf), val(field)
 
     output:
-    tuple val(type), path("${params.sample_id}_${type}.table")
+    tuple val(type), path("${vcf.baseName}.table")
 
     script:
     """
-    gatk VariantsToTable -V $vcf -F CHROM -F POS -F ID -F REF -F ALT $field -O ${params.sample_id}_${type}.table --show-filtered
+    gatk VariantsToTable -V $vcf -F ID -F CHROM -F POS -F REF -F ALT -F QUAL -F FILTER $field -O ${vcf.baseName}.table --show-filtered
     """
 }

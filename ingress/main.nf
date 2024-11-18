@@ -55,20 +55,22 @@ process merge_barcode {
     """
 }
 
-process grep_vcfGenes {
+process vcf_to_table {
     label "grep" 
     tag "$type"
 
     input:
     tuple val(type), path(vcf)
-    path genes
 
     output:
-    tuple val(type), path("${params.sample_id}_${type}.genes.table")
+    tuple val(type), path("${vcf.baseName}.table")
+
+    when:
+    type == 'qdnaseq'
 
     script:
     """
-    grep -f $genes $vcf > ${params.sample_id}_${type}.genes.table || touch ${params.sample_id}_${type}.genes.table
+    grep -v '##' $vcf | sed 's/#//g' > ${vcf.baseName}.table
     """
 }
 
