@@ -32,6 +32,6 @@ process clean_vcf {
 
     script:
     """
-    vcf_arrange.R $table $params.gene_list $params.gene_tsv
+    vcf_arrange.R $table $params.stjude_list $params.cancer_genes
     """
 }
