@@ -23,7 +23,8 @@ process clean_vcf {
     array 5
 
     input:
-    tuple val(type), path(table)
+    tuple val(type), path(table), path(stjude), path(cancer_ex)
+
     output:
     path "*.tsv", optional:true
     
@@ -32,6 +33,6 @@ process clean_vcf {
 
     script:
     """
-    vcf_arrange.R $table $params.stjude_list $params.cancer_genes
+    vcf_arrange.R $table $stjude $cancer_ex
     """
 }
