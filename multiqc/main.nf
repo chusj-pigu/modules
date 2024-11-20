@@ -1,6 +1,6 @@
 process multiqc {
     
-    publishDir "${params.out_dir}/reports", mode: 'copy'
+    publishDir "${params.out_dir}/reports", mode: 'link', enabled: params.publish
     container="staphb/multiqc:latest"
     
     input:
