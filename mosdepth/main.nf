@@ -1,7 +1,7 @@
 process mosdepth {
     
     container="quay.io/biocontainers/mosdepth:0.3.3--h37c5b7d_2"
-    publishDir "${params.out_dir}/reports/mosdepth", mode: 'link', enabled: params.publish
+    publishDir "${params.out_dir}/reports/mosdepth", mode: 'link', enabled: params.publish, pattern: '*.regions.bed.gz'
     tag "mosdepth $bam.baseName"
     label "mosdepth"
 
@@ -9,7 +9,7 @@ process mosdepth {
     tuple path(bam), path(bai)
 
     output:
-    path "${bam.baseName}.regions.bed.gz", optional: true
+    path "*"
 
     script:
     def bed = params.bed ? "-b ${params.bed}" : ""
