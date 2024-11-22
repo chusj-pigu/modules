@@ -1,5 +1,5 @@
 process clean_countmx {
-    publishDir "${params.out_dir}/reports", mode: 'copy'
+    publishDir "${params.out_dir}/reports", mode: 'link'
     container 'rocker/tidyverse:latest'
 
     input:
@@ -15,7 +15,7 @@ process clean_countmx {
 }
 
 process clean_vcf {
-    publishDir "${params.out_dir}", mode: 'copy'
+    publishDir "${params.out_dir}", mode: 'link'
     container 'rocker/tidyverse:latest'
     tag "$type"
     label "rscript"

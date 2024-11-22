@@ -19,7 +19,7 @@ process gather_sturgeon {
 
 process merge_amplicon {
     label "cat"
-    publishDir "${params.out_dir}/reads", mode: 'copy'
+    publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
     tag "merge $sample"
 
     input:
@@ -40,6 +40,7 @@ process merge_amplicon {
 }
 
 process merge_barcode {
+    publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
     label "cat"
     tag "merge $sample"
 
