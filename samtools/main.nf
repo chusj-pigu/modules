@@ -81,7 +81,7 @@ process mergeChunks {
 process mergeFinal {
     
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
-    publishDir "${params.out_dir}/alignments", mode: 'link'
+    publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
     label "sam_big"
     debug true
 
