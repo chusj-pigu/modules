@@ -45,14 +45,14 @@ process merge_barcode {
     tag "merge $sample"
 
     input:
-    tuple val(sample), val(barcode)
+    tuple val(barcode), val(sample), path(fq)
 
     output:
     path "${sample}.fq.gz"
 
     script:
     """
-    find ${params.in_dir}/${barcode} -type f | xargs cat > ${sample}.fq.gz
+    cat $fq > "${sample}.fq.gz"
     """
 }
 
