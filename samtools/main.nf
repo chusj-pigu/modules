@@ -89,10 +89,10 @@ process mergeFinal {
     path merged_bams
 
     output:
-    tuple path("${params.sample_id}.bam"), path("${params.sample_id}.bam.bai")
+    tuple path("${params.sample_id}.hg38.bam"), path("${params.sample_id}.hg38.bam.bai")
 
     script:
     """
-    samtools merge -@ $params.threads $merged_bams | samtools sort -@ $params.threads --write-index -o ${params.sample_id}.bam##idx##${params.sample_id}.bam.bai
+    samtools merge -@ $params.threads $merged_bams | samtools sort -@ $params.threads --write-index -o ${params.sample_id}.hg38.bam##idx##${params.sample_id}.h38.bam.bai
     """
 }
