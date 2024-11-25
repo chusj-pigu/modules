@@ -74,7 +74,7 @@ process mergeChunks {
 
     script:
     """
-    samtools merge -@ ${params.threads} "${chunk}.bam" $bam
+    samtools merge -@ ${params.threads} --no-PG "${chunk}.bam" $bam
     """
 }
 
@@ -93,6 +93,6 @@ process mergeFinal {
 
     script:
     """
-    samtools merge -@ ${params.threads} --write-index ${params.sample_id}.bam##idx##${params.sample_id}.bam.bai $merged_bams
+    samtools merge -@ $params.threads $merged_bams | samtools sort -@ $params.threads --write-index -o ${params.sample_id}.bam##idx##${params.sample_id}.bam.bai
     """
 }
