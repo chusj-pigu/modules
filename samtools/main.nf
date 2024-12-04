@@ -62,7 +62,6 @@ process mergeChunks {
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     tag "merge $chunk"
     label "sam_mid"
-    debug true
     executor 'slurm'
     array 22
     
@@ -83,7 +82,6 @@ process mergeFinal {
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
     publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
     label "sam_big"
-    debug true
 
     input:
     path merged_bams
@@ -94,5 +92,25 @@ process mergeFinal {
     script:
     """
     samtools merge -@ $params.threads $merged_bams | samtools sort -@ $params.threads --write-index -o ${params.sample_id}.hg38.bam##idx##${params.sample_id}.h38.bam.bai
+    """
+}
+
+process separate_panel {
+    
+    container="ghcr.io/bwbioinfo/samtools-docker-cwl:latest"
+    publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
+    label "sam_mid"
+
+    input:
+    path bam
+    path bed
+
+    output:
+    tuple path("${bam.baseName}_panel.bam"), path("${bam.baseName}_panel.bam.bai"), emit: panel
+    tuple path("${bam.baseName}_bg.bam"), path("${bam.baseName}_bg.bam.bai"), emit: bg
+    
+    script:
+    """
+    samtools view -b -@ $params.threads -x MM,ML -L $bed --write-index -o ${bam.baseName}_panel.bam##idx##${bam.baseName}_panel.bam.bai -U ${bam.baseName}_bg.bam##idx##${bam.baseName}_bg.bam.bai $bam
     """
 }
