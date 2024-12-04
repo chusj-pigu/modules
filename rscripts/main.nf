@@ -36,3 +36,23 @@ process clean_vcf {
     vcf_arrange.R $table $stjude $cancer_ex
     """
 }
+
+process coverage_as {
+    publishDir "${params.out_dir}/reports", mode: 'link'
+    container 'rocker/tidyverse:latest'
+
+    input:
+    path(bed_nofilter)
+    path(bed_primary)
+    path(bed_mapq60)
+    val(background_cov)
+    
+    output:
+    path "*.pdf"
+
+    script:
+    """
+    coverage_plot.R $bed_nofilter $bed_primary $bed_mapq60 $background_cov
+    """
+    
+}

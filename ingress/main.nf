@@ -91,4 +91,19 @@ process gzipd_vcf {
     """
 }
 
+process gzip {
+    label "gzip"
+    
+    input:
+    path file
+
+    output:
+    path "${file.baseName}"
+
+    script:
+    """
+    gzip -d -c $file > ${file.baseName}
+    """
+}
+
 
