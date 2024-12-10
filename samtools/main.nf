@@ -4,7 +4,6 @@ process sam_sort {
     label "sam_big"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
     tag "sam_sort $sample_id"
-    array 10
 
     input: 
     tuple val(sample_id), path(sam)
@@ -25,7 +24,6 @@ process ubam_to_fastq {
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
     tag "bam-fastq $ubam.baseName"
-    array 10
 
     input:
     tuple val(sample_id), path(ubam)
@@ -45,7 +43,6 @@ process qs_filter {
     label "sam_sm"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
     tag "qc filter $sample_id"
-    array 10
 
     input:
     tuple val(sample_id), path(ubam)

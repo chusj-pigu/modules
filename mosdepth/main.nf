@@ -4,7 +4,6 @@ process mosdepth {
     publishDir "${params.out_dir}/reports/mosdepth", mode: 'link', enabled: params.publish, pattern: '*.regions.bed.gz'
     tag "mosdepth $bam.baseName"
     label "mosdepth"
-    array 10
 
     input:
     tuple val(sample_id), path(bam), path(bai), path(bed), val(flag), val(qual)
