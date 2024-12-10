@@ -1,8 +1,8 @@
 process basecall {
     
-    container="ghcr.io/bwbioinfo/dorado-docker-cwl:latest"
+    container="ghcr.io/bwbioinfo/dorado-docker-cwl:${params.basecalling_sha}"
     label "dorado"
-    tag "basecalling $params.sample_id"
+    tag "basecalling $sample_id"
 
     input:
     tuple val(sample_id), path(pod5), val(ubam), val(model)
