@@ -2,18 +2,19 @@ process mapping {
     
     label "minimap"
     tag "mapping $params.sample_id"
-    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
+    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:3dcd900155cddf797802bf4676545af87d9e0821"
+    array 10
 
     input:
     path ref
-    path fastq
+    tuple val(sample_id), path(fastq)
 
     output:
-    path "${params.sample_id}.${ref.simpleName}.sam"
+    tuple val(sample_id), path("${sample_id}.${ref.simpleName}.sam")
 
     script:
     """
-    minimap2 -y -ax map-ont -t $params.threads $ref $fastq > "${params.sample_id}.${ref.simpleName}.sam"
+    minimap2 -y -ax map-ont -t $params.threads $ref $fastq > ${sample_id}.${ref.simpleName}.sam
     """
 }
 
@@ -21,7 +22,7 @@ process mapping_amplicon {
     
     label "minimap"
     tag "mapping $sample"
-    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
+    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:3dcd900155cddf797802bf4676545af87d9e0821"
 
     input:
     tuple path(sample), path(ref)

@@ -5,11 +5,11 @@ process pod5_channel {
     tag "$params.sample_id"
     
     input:
-    path pod5
+    tuple val(sample_id), path(pod5), path(ubam)
 
     
     output:
-    path "pod5summary.tsv"
+    tuple val(sample_id), path("pod5summary.tsv"), path(ubam)
 
     script:
     """
@@ -24,11 +24,11 @@ process subset {
     tag "$params.sample_id"
 
     input:
-    path pod5
-    path tsv
+    tuple val(sample_id), path(pod5), path(ubam)
+    tuple val(sample_id), path(tsv)
     
     output:
-    path "split_by_channel"
+    tuple val(sample_id), path("split_by_channel"), path(ubam)
 
     script:
     """

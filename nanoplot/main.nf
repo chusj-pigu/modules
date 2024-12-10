@@ -1,17 +1,17 @@
 process nanoplot {
     
     container="nanozoo/nanoplot:1.42.0--547049c"
-    tag "nanoplot $reads.simpleName"
+    tag "nanoplot $sample_id"
     
     input: 
-    path reads
+    tuple val(sample_id), path(reads)
 
     output: 
-    path "Nanoplot/${reads.simpleName}"
+    path "*"
 
     script:
     def type = params.skip_basecall ? "--fastq" : "--ubam"
     """
-    NanoPlot -t $task.cpus -p ${reads.simpleName} --minqual 10 --huge $type $reads -o Nanoplot/${reads.simpleName}
+    NanoPlot -t $task.cpus -p $sample_id --minqual 10 --huge $type $reads
     """
 }
