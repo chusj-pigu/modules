@@ -2,12 +2,10 @@ process mapping {
     
     label "minimap"
     tag "mapping $params.sample_id"
-    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:3dcd900155cddf797802bf4676545af87d9e0821"
-    array 10
+    container="ghcr.io/bwbioinfo/minimap2-docker-cwl:latest"
 
     input:
-    path ref
-    tuple val(sample_id), path(fastq)
+    tuple val(sample_id), path(fastq), path(ref)
 
     output:
     tuple val(sample_id), path("${sample_id}.${ref.simpleName}.sam")

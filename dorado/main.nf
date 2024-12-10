@@ -1,13 +1,11 @@
 process basecall {
     
-    container="ghcr.io/bwbioinfo/dorado-docker-cwl:30bacb4dc96d82915eba9588eb1b38ea7c6cb91a"
+    container="ghcr.io/bwbioinfo/dorado-docker-cwl:latest"
     label "dorado"
     tag "basecalling $params.sample_id"
-    array 10
 
     input:
-    tuple val(sample_id), path(pod5), val(ubam)
-    val model
+    tuple val(sample_id), path(pod5), val(ubam), val(model)
 
     output:
     tuple val(sample_id), path("*.bam")
