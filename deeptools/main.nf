@@ -1,6 +1,6 @@
 process multiBamSummary {
     
-    container="ghcr.io/bwbioinfo/deeptools-docker-cwl:latest"
+    container="ghcr.io/bwbioinfo/deeptools-docker-cwl:cae8e2f8bd839f15d37e42b3bc41e3dc69f9fe15"
     label "deeptools"
     tag "multibam $fasta"
     publishDir "${params.out_dir}/reports", mode: 'link'
@@ -14,5 +14,24 @@ process multiBamSummary {
     script:
     """
     multiBamSummary bins --binSize 50 -b $bam --minMappingQuality 30 -out ${fasta}_readCounts.npz --outRawCounts ${fasta}_readCounts.tab
+    """
+}
+
+process bamCoverage {
+
+    container="ghcr.io/bwbioinfo/deeptools-docker-cwl:cae8e2f8bd839f15d37e42b3bc41e3dc69f9fe15"
+    label "deeptools"
+    tag "bigwig"
+    publishDir "${params.out_dir}/alignments", mode: 'link'
+
+    input:
+    path bam
+
+    output:
+    path "${bam.simpleName}.bigwig"
+
+    script:
+    """
+    bamCoverage -b $bam -o ${bam.simpleName}.bigwig -of "bigwig"
     """
 }
