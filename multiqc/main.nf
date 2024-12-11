@@ -1,7 +1,7 @@
 process multiqc {
     
     publishDir "${params.out_dir}/reports", mode: 'link', enabled: params.publish
-    container="multiqc/multiqc:v1.25.2"
+    container="staphb/multiqc:1.25"
     
     input:
     path '*'
