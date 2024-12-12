@@ -28,10 +28,10 @@ process bamCoverage {
     tuple path(bam), path(bai)
 
     output:
-    path "${bam.simpleName}.bigwig"
+    path "${bam.baseName}.bigwig"
 
     script:
     """
-    bamCoverage -b $bam -o ${bam.simpleName}.bigwig -of "bigwig"
+    bamCoverage -b $bam -o ${bam.baseName}.bigwig -of "bigwig"
     """
 }
