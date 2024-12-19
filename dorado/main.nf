@@ -5,7 +5,7 @@ process basecall {
     tag "basecalling $sample_id"
 
     input:
-    tuple val(sample_id), path(pod5), val(ubam), val(model)
+    tuple val(sample_id), path(pod5), path(ubam), val(model)
 
     output:
     tuple val(sample_id), path("*.bam")
@@ -15,7 +15,7 @@ process basecall {
     def mod = params.no_mod ? "" : (params.m_bases_path ? "--modified-bases-models ${params.m_bases_path}" : "--modified-bases ${params.m_bases}")
     //def dev = params.dorado_cpu ? '-x "cpu"' : ""
     def b = params.batch ? "-b $params.batch" : ""
-    def resume = ubam != 'null' ? "--resume-from $ubam > ${sample_id}_unaligned_final.bam" : "> ${sample_id}_unaligned.bam"
+    def resume = ubam.name != 'NO_UBAM' ? "--resume-from $ubam > ${sample_id}_unaligned_final.bam" : "> ${sample_id}_unaligned.bam"
     """
     dorado $call $b $model $pod5 $mod $resume
     """

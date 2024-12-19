@@ -34,7 +34,7 @@ process ubam_to_fastq {
     script:
     def mod = params.no_mod ? "" : "-T '*'" 
     """
-    samtools fastq -c 6 $mod -@ $params.threads $ubam -o ${ubam.baseName}.fq.gz
+    samtools fastq $mod -@ $params.threads $ubam > ${ubam.baseName}.fq.gz
     """
 }
 
