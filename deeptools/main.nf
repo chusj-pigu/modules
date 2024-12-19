@@ -25,7 +25,7 @@ process bamCoverage {
     publishDir "${params.out_dir}/alignments", mode: 'link'
 
     input:
-    tuple path(bam), path(bai)
+    tuple val(sample_id), path(bam), path(bai)
 
     output:
     path "${bam.baseName}.bigwig"
