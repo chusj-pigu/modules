@@ -15,12 +15,10 @@ process clean_countmx {
 }
 
 process clean_vcf {
-    publishDir "${params.out_dir}", mode: 'link'
+    publishDir "${params.out_dir}", mode: params.publish_mode
     container 'rocker/tidyverse:latest'
     tag "$type"
     label "rscript"
-    executor 'slurm'
-    array 5
 
     input:
     tuple val(type), path(table), path(stjude), path(cancer_ex)
