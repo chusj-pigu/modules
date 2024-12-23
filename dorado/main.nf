@@ -21,3 +21,21 @@ process basecall {
     """
 }
 
+process demultiplex {
+    
+    container="ghcr.io/bwbioinfo/dorado-docker-cwl:30bacb4dc96d82915eba9588eb1b38ea7c6cb91a"
+    label "dorado"
+    tag "demultiplexing $sample_id"
+
+    input:
+    tuple val(sample_id), path(bam)
+
+    output:
+    tuple val(sample_id), path("*.bam")
+
+    script:
+    """
+    dorado demux --output_dir $sample_id --no_classify $bam
+    """
+}
+

@@ -20,7 +20,7 @@ process sam_sort {
 
 process ubam_to_fastq {
 
-    publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
+    publishDir params.demux != null ? "${params.out_dir}/reads/$sample_id" : "${params.out_dir}/reads", mode: 'link', enabled: params.publish
     label "sam_long"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
     tag "bam-fastq $ubam.baseName"
