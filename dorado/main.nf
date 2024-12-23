@@ -13,11 +13,11 @@ process basecall {
     script:
     def call = params.duplex ? "duplex" : "basecaller"
     def mod = params.no_mod ? "" : (params.m_bases_path ? "--modified-bases-models ${params.m_bases_path}" : "--modified-bases ${params.m_bases}")
-    def kit = params.demux != null ? "--kit-name $params.demux" : ""
+    def multi = params.demux != null ? "--no-trim" : ""
     def b = params.batch ? "-b $params.batch" : ""
     def resume = ubam.name != 'NO_UBAM' ? "--resume-from $ubam > ${sample_id}_unaligned_final.bam" : "> ${sample_id}_unaligned.bam"
     """
-    dorado $call $b $model $pod5 $mod $kit $resume
+    dorado $call $b $model $pod5 $mod $multi $resume
     """
 }
 
@@ -34,8 +34,9 @@ process demultiplex {
     tuple val(sample_id), path("*.bam")
 
     script:
+    def kit = params.demux != null ? "--kit-name $params.demux" : ""
     """
-    dorado demux --output_dir $sample_id --no_classify $bam
+    dorado demux $kit --output_dir $sample_id $bam
     """
 }
 
