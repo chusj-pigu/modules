@@ -45,15 +45,15 @@ process qs_filter {
     tag "qc filter $sample_id"
 
     input:
-    tuple val(sample_id), path(ubam)
+    tuple val(sample_id), val(barcode), path(ubam)
 
     output:
-    tuple val(sample_id), path("${sample_id}_pass.bam"), emit: ubam_pass
-    tuple val(sample_id), path("${sample_id}_fail.bam"), emit: ubam_fail
+    tuple val(sample_id), path("${barcode}_pass.bam"), emit: ubam_pass
+    tuple val(sample_id), path("${barcode}_fail.bam"), emit: ubam_fail
 
     script:
     """
-    samtools view --no-PG -@ $params.threads -e '[qs] >=$params.minqs' -b $ubam --output ${sample_id}_pass.bam --unoutput ${sample_id}_fail.bam
+    samtools view --no-PG -@ $params.threads -e '[qs] >=$params.minqs' -b $ubam --output ${barcode}_pass.bam --unoutput ${barcode}_fail.bam
     """
 }
 

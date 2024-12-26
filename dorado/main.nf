@@ -31,12 +31,12 @@ process demultiplex {
     tuple val(sample_id), path(bam)
 
     output:
-    tuple val(sample_id), path("*.bam")
+    tuple val(sample_id), path("$sample_id/*.bam")
 
     script:
     def kit = params.demux != null ? "--kit-name $params.demux" : ""
     """
-    dorado demux $kit --output_dir $sample_id $bam
+    dorado demux $kit --output-dir $sample_id $bam
     """
 }
 
