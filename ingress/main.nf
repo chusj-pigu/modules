@@ -48,7 +48,7 @@ process merge_barcode {
     tuple val(barcode), val(sample), path(fq)
 
     output:
-    path "${sample}.fq"
+    tuple val(sample), path("${sample}.fq")
 
     script:
     """
