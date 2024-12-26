@@ -29,12 +29,12 @@ process ubam_to_fastq {
     tuple val(sample_id), val(barcode), path(ubam)
 
     output:
-    tuple val(sample_id), path("${ubam.baseName}.fq.gz")
+    tuple val(sample_id), path("${ubam.baseName}.fq")
 
     script:
     def mod = params.no_mod ? "" : "-T '*'" 
     """
-    samtools fastq $mod -@ $params.threads $ubam > ${ubam.baseName}.fq.gz
+    samtools fastq $mod -@ $params.threads $ubam > ${ubam.baseName}.fq
     """
 }
 

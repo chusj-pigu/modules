@@ -48,11 +48,11 @@ process merge_barcode {
     tuple val(barcode), val(sample), path(fq)
 
     output:
-    path "${sample}.fq.gz"
+    path "${sample}.fq"
 
     script:
     """
-    cat $fq > "${sample}.fq.gz"
+    cat $fq > "${sample}.fq"
     """
 }
 
