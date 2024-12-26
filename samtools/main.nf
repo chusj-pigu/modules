@@ -42,7 +42,7 @@ process qs_filter {
     
     label "sam_sm"
     container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
-    tag "qc filter $sample_id"
+    tag "qc filter $barcode"
 
     input:
     tuple val(sample_id), val(barcode), path(ubam)
