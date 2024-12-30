@@ -6,7 +6,7 @@ process clean_countmx {
     path tab
 
     output:
-    path "readCounts_summary.xlsx"
+    path "readCounts_summary.csv"
 
     script:
     """
