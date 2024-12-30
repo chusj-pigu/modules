@@ -26,7 +26,7 @@ process mapping_amplicon {
     tuple val(meta), path(sample), path(ref)
 
     output:
-    path val(meta), path("${sample.simpleName}-${ref.simpleName}.sam")
+    tuple val(meta), path("${sample.simpleName}-${ref.simpleName}.sam")
 
     script:
     """
