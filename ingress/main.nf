@@ -20,7 +20,7 @@ process gather_sturgeon {
 process merge_amplicon {
     label "cat"
     publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
-    tag "merge $sample"
+    tag "merge $meta"
 
     input:
     tuple val(meta), val(fasta), val(barcode)
