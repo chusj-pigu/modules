@@ -1,5 +1,5 @@
 process clean_countmx {
-    publishDir "${params.out_dir}/reports", mode: 'link'
+    publishDir "${params.out_dir}/reports", mode: 'link', enabled: params.publish
     container 'rocker/tidyverse:latest'
 
     input:
