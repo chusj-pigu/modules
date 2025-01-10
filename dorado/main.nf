@@ -14,10 +14,11 @@ process basecall {
     def call = params.duplex ? "duplex" : "basecaller"
     def mod = params.no_mod ? "" : (params.m_bases_path ? "--modified-bases-models ${params.m_bases_path}" : "--modified-bases ${params.m_bases}")
     def multi = params.demux != null ? "--no-trim" : ""
+    def device = params.device != null ? "-x $params.device" : ""
     def b = params.batch ? "-b $params.batch" : ""
     def resume = ubam.name != 'NO_UBAM' ? "--resume-from $ubam > ${sample_id}_unaligned_final.bam" : "> ${sample_id}_unaligned.bam"
     """
-    dorado $call $b $model $pod5 $mod $multi $resume
+    dorado $call $device $b $model $pod5 $mod $multi $resume
     """
 }
 
