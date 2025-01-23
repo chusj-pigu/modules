@@ -2,7 +2,7 @@ process sam_sort {
 
     publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
     label "sam_big"
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     tag "sam_sort $sample_id"
 
     input: 
@@ -20,28 +20,33 @@ process sam_sort {
 
 process ubam_to_fastq {
 
-    publishDir params.demux != null ? "${params.out_dir}/reads/$sample_id/$barcode" : "${params.out_dir}/reads", mode: 'link', enabled: params.publish
+    publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
     label "sam_long"
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     tag "bam-fastq $ubam.baseName"
 
     input:
     tuple val(sample_id), val(barcode), path(ubam)
 
     output:
-    tuple val(sample_id), path("${ubam.baseName}.fq")
+    tuple val(sample_id), path("${sample_id}_${suffix}.fq.gz")
 
     script:
-    def mod = params.no_mod ? "" : "-T '*'" 
+    def mod = params.no_mod ? "" : "-T '*'"
+    def suffix = ubam.baseName.tokenize('_')[-1].replace('.bam', '')
     """
-    samtools fastq $mod -@ $params.threads $ubam > ${ubam.baseName}.fq
+    samtools fastq \\
+    $mod \\
+    -@ $task.cpus \\
+    $ubam | \\
+    pigz -p $task.cpus -c > ${sample_id}_${suffix}.fq.gz
     """
 }
 
 process qs_filter {
     
     label "sam_sm"
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     tag "qc filter $barcode"
 
     input:
@@ -59,7 +64,7 @@ process qs_filter {
 
 process mergeChunks {
     
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     tag "merge $chunk"
     label "sam_mid"
     debug true
@@ -80,7 +85,7 @@ process mergeChunks {
 
 process mergeFinal {
     
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
     label "sam_big"
 
@@ -98,7 +103,7 @@ process mergeFinal {
 
 process separate_panel {
     
-    container="ghcr.io/bwbioinfo/samtools-docker-cwl:e80764711a121872e9ea35d90229cec6dd6d8dec"
+    container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
     publishDir "${params.out_dir}/alignments", mode: 'link', enabled: params.publish
     label "sam_mid"
 
