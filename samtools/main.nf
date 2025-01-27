@@ -23,13 +23,13 @@ process ubam_to_fastq {
     publishDir "${params.out_dir}/reads", mode: 'link', enabled: params.publish
     label "sam_long"
     container="ghcr.io/chusj-pigu/samtools:b195aca24376fa3482000f5bcdc804ac36d9da0b"
-    tag "bam-fastq $ubam.baseName"
+    tag "bam-fastq $sample_id"
 
     input:
     tuple val(sample_id), val(barcode), path(ubam)
 
     output:
-    tuple val(sample_id), path("${sample_id}_${suffix}.fq.gz")
+    tuple val(sample_id), path("*.fq.gz")
 
     script:
     def mod = params.no_mod ? "" : "-T '*'"
