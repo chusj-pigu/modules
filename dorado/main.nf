@@ -25,7 +25,6 @@ process basecall {
 process demultiplex {
     
     container="ghcr.io/bwbioinfo/dorado-docker-cwl:30bacb4dc96d82915eba9588eb1b38ea7c6cb91a"
-    label "dorado"
     tag "demultiplexing $sample_id"
 
     input:
