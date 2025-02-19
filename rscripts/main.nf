@@ -21,7 +21,7 @@ process clean_vcf {
     label "rscript"
 
     input:
-    tuple val(type), path(table), path(stjude), path(cancer_ex)
+    tuple val(type), path(table), path(bed_genes), path(cancer_ex)
 
     output:
     path "*.tsv", optional:true
@@ -31,7 +31,7 @@ process clean_vcf {
 
     script:
     """
-    vcf_arrange.R $table $stjude $cancer_ex
+    vcf_arrange.R $table $bed_genes $cancer_ex
     """
 }
 
